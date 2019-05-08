@@ -69,32 +69,48 @@ function createRock(x) {
    * Now that we have a rock, we'll need to append
    * it to GAME and move it downwards.
    */
-
-
+   GAME.append(rock);
+  // GAME.insertBefore(rock, null);
   /**
    * This function moves the rock. (2 pixels at a time
    * seems like a good pace.)
    */
   function moveRock() {
-    // implement me!
     // (use the comments below to guide you!)
     /**
      * If a rock collides with the DODGER,
      * we should call endGame()
      */
-
+     checkCollision(rock);
+     if (checkCollision(rock) == true) {
+      
+      endGame();
+     }
     /**
      * Otherwise, if the rock hasn't reached the bottom of
      * the GAME, we want to move it again.
      */
+    let step = function() {
+      rock.style.top = `${top += 2}px`;
 
+      if (top < 360) {
+        window.requestAnimationFrame(step)
+      }
+    }
+
+    // step();
+    window.requestAnimationFrame(step);
     /**
      * But if the rock *has* reached the bottom of the GAME,
      * we should remove the rock from the DOM
      */
+    if (top >= 360) {
+      rock.remove();     
+    }
   }
 
   // We should kick of the animation of the rock around here
+  setInterval(moveRock, 500);
 
   // Add the rock to ROCKS so that we can remove all rocks
   // when there's a collision
@@ -104,13 +120,15 @@ function createRock(x) {
   return rock
 }
 
-/**
- * End the game by clearing `gameInterval`,
- * removing all ROCKS from the DOM,
- * and removing the `moveDodger` event listener.
- * Finally, alert "YOU LOSE!" to the player.
- */
 function endGame() {
+  // End the game by clearing `gameInterval`
+  clearInterval(gameInterval);
+  // removing all ROCKS from the DOM
+  ROCKS.length = 0; 
+  // and removing the `moveDodger` event listener.
+
+  // Finally, alert "YOU LOSE!" to the player.
+  // alert("YOU LOSE!");
 }
 
 function moveDodger(e) {

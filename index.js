@@ -16,26 +16,20 @@ var gameInterval = null
  * Be aware of what's above this line,
  * but all of your work should happen below.
  */
-
+// Scope 1
 function checkCollision(rock) {
-  // use the comments below to guide you!
   const top = positionToInteger(rock.style.top)
-
-  // rocks are 20px high
-  // DODGER is 20px high
+  // rocks & DODGER are 20px high
   // GAME_HEIGHT - 20 - 20 = 360px;
   if (top > 360) {
     const dodgerLeftEdge = positionToInteger(DODGER.style.left)
-
     // FIXED: The DODGER is 40 pixels wide -- how do we get the right edge?
     const dodgerRightEdge = positionToInteger(DODGER.style.left) + 40;
 
     const rockLeftEdge = positionToInteger(rock.style.left)
-
     // FIXED: The rock is 20 pixel's wide -- how do we get the right edge?
     const rockRightEdge = positionToInteger(rock.style.left) + 20;
     // Think about it -- what's happening here?
-
     // There's been a collision if one of three things is true:
     if (rockLeftEdge < dodgerLeftEdge && rockRightEdge > dodgerLeftEdge) {
       // 1. The rock's left edge is < the DODGER's left edge and the rock's right edge is > the DODGER's left edge;
@@ -53,56 +47,46 @@ function checkCollision(rock) {
     }
   }
 }
-
+// Scope 2
 function createRock(x) {
   const rock = document.createElement('div')
 
   rock.className = 'rock'
   rock.style.left = `${x}px`
-
   // Hmmm, why would we have used `var` here?
   var top = 0
-
   rock.style.top = top
-
   /**
    * Now that we have a rock, we'll need to append
    * it to GAME and move it downwards.
    */
    GAME.appendChild(rock);
-   // GAME.append(rock);
-  // GAME.insertBefore(rock, null);
   /**
    * This function moves the rock. (2 pixels at a time
    * seems like a good pace.)
    */
+   // Scope 2.a
   function moveRock() {
-    // (use the comments below to guide you!)
     /**
      * If a rock collides with the DODGER,
      * we should call endGame()
      */
-     checkCollision(rock);
-     if (checkCollision(rock) == true) {
-      
+    checkCollision(rock); // defined in scope 1
+
+    if (checkCollision(rock) == true) { 
       endGame();
-     }
+    }
     /**
      * Otherwise, if the rock hasn't reached the bottom of
      * the GAME, we want to move it again.
      */
-    // let step = function() {
-      rock.style.top = `${top += 2}px`;
+    rock.style.top = `${top += 2}px`;
 
-      if (top < GAME_HEIGHT) {
-        window.requestAnimationFrame(moveRock)
-      } else {
-        rock.remove()
-      }
-    // }
-
-    // step();
-    window.requestAnimationFrame(step);
+    if (top < GAME_HEIGHT) {
+      window.requestAnimationFrame(moveRock) // recursive call
+    } else {
+      rock.remove()
+    }
     /**
      * But if the rock *has* reached the bottom of the GAME,
      * we should remove the rock from the DOM
@@ -122,7 +106,7 @@ function createRock(x) {
   // Finally, return the rock element you've created
   return rock
 }
-
+// Scope 3
 function endGame() {
   // End the game by clearing `gameInterval`
   clearInterval(gameInterval);
@@ -133,7 +117,7 @@ function endGame() {
   // Finally, alert "YOU LOSE!" to the player.
   // alert("YOU LOSE!");
 }
-
+// Scope 4
 function moveDodger(e) {
   // implement me!
   /**
@@ -144,7 +128,7 @@ function moveDodger(e) {
    * And be sure to use the functions declared below!
    */
 }
-
+// Scope 5
 function moveDodgerLeft() {
   // implement me!
   /**
@@ -152,7 +136,7 @@ function moveDodgerLeft() {
    * (mabye 4 pixels?). Use window.requestAnimationFrame()!
    */
 }
-
+// Scope 6
 function moveDodgerRight() {
   // implement me!
   /**
@@ -165,10 +149,11 @@ function moveDodgerRight() {
  * @param {string} p The position property
  * @returns {number} The position as an integer (without 'px')
  */
+ // Scope 7
 function positionToInteger(p) {
   return parseInt(p.split('px')[0]) || 0
 }
-
+// Scope 8
 function start() {
   window.addEventListener('keydown', moveDodger)
 

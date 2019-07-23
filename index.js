@@ -11,6 +11,7 @@ const ROCKS = [];
 const START = document.getElementById('start');
 
 var gameInterval = null;
+var gameOver = false;
 // Scope 1
 function checkCollision(rock) {
   const top = positionToInteger(rock.style.top);
@@ -37,33 +38,62 @@ function createRock(x) {
   rock.style.left = `${x}px`;
   var top = 0;
   rock.style.top = top;
-  GAME.appendChild(rock);
+
+  if (!gameOver) {
+    GAME.appendChild(rock);
+    window.requestAnimationFrame(moveRock);
+  }
    // Scope 2.a
   function moveRock() {
-    checkCollision(rock); // defined in scope 1
-    if (checkCollision(rock) == true) { 
-      endGame();
-    }
-    // add else statement
-    rock.style.top = `${top += 2}px`;
-    if (top < GAME_HEIGHT) {
-      window.requestAnimationFrame(moveRock); // recursive call
+    checkCollision(rock) ? gameOver = true : 0; // defined in scope 1
+    // 
+    if (gameOver == true) { 
+      endGame(); // defined in scope 3
+      clearInterval(fallingRocks);
     } else {
-      rock.remove();
-    }
-    if (top >= 360) {
-      rock.remove();     
+      rock.style.top = `${top += 2}px`;
+      if (top < GAME_HEIGHT) {
+        window.requestAnimationFrame(moveRock); // recursive call
+      } else {
+        rock.remove();
+      }
     }
   }
-  setInterval(moveRock, 500);
+  // setInterval(moveRock, 500);
+  // must call setInterval this way otherwise clearInterval doesn't work
+  var fallingRocks = setInterval(function() {
+    moveRock()
+  }, 500); 
   ROCKS.push(rock);
   return rock;
 }
 // Scope 3
 function endGame() {
+  // GAME.lastElementChild.remove();
   clearInterval(gameInterval);
-  ROCKS.length = 0; 
+  while (ROCKS.length > 0) {
+    ROCKS.shift(); // removes all rock elements from array
+  }
+  
+  // ROCKS.length = 0;
+  let rock = document.getElementsByClassName("rock"); 
+  if (rock[0]) {
+    // rock[0].parentNode.removeChild(rock[0]);
+    rock[0].remove();
+  } // clears DOM of rocks
+  //
+  // var lastRock = document.getElementsByClassName("rock"); // maybe call this 'rock' ?
+  // if (lastRock[0]) {
+  //   lastRock[0].parentNode.removeChild(lastRock[0]);
+  // } // clears DOM of rocks
+  // console.log(lastRock[0].parentNode)
+  // console.log(lastRock[0]);
+  // GAME.removeChild(lastRock[0]);
  // alert("YOU LOSE!");
+  gameOver = false;
+  console.log("you lose!");
+ // console.log(gameOver);
+ // return true;
 }
 // Scope 4
 function moveDodger(e) {

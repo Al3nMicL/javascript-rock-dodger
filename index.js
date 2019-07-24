@@ -59,7 +59,6 @@ function createRock(x) {
       }
     }
   }
-  // setInterval(moveRock, 500);
   // must call setInterval this way otherwise clearInterval doesn't work
   var fallingRocks = setInterval(function() {
     moveRock()
@@ -69,31 +68,19 @@ function createRock(x) {
 }
 // Scope 3
 function endGame() {
-  // GAME.lastElementChild.remove();
   clearInterval(gameInterval);
-  while (ROCKS.length > 0) {
-    ROCKS.shift(); // removes all rock elements from array
-  }
   
-  // ROCKS.length = 0;
+  ROCKS.forEach(function(rock){
+    rock.remove();
+  }); // removes all rock elements from array
+  
   let rock = document.getElementsByClassName("rock"); 
   if (rock[0]) {
-    // rock[0].parentNode.removeChild(rock[0]);
     rock[0].remove();
   } // clears DOM of rocks
-  //
-  // var lastRock = document.getElementsByClassName("rock"); // maybe call this 'rock' ?
-  // if (lastRock[0]) {
-  //   lastRock[0].parentNode.removeChild(lastRock[0]);
-  // } // clears DOM of rocks
-  // console.log(lastRock[0].parentNode)
-  // console.log(lastRock[0]);
-  // GAME.removeChild(lastRock[0]);
  // alert("YOU LOSE!");
   gameOver = false;
   console.log("you lose!");
- // console.log(gameOver);
- // return true;
 }
 // Scope 4
 function moveDodger(e) {

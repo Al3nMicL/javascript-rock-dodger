@@ -85,6 +85,16 @@ function endGame() {
 // Scope 4
 function moveDodger(e) {
   e.preventDefault();
+  if (e.which !== LEFT_ARROW && e.which !== RIGHT_ARROW) {
+    return 0;
+  } // move this to a switch statement
+  if (e.which === LEFT_ARROW) {
+    e.stopPropagation();
+    moveDodgerLeft();
+  } else if (e.which === RIGHT_ARROW) {
+    e.stopPropagation();
+    moveDodgerRight();
+  } // move this to a switch statement
 
 }
 // Scope 5

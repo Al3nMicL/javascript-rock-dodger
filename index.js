@@ -84,6 +84,7 @@ function endGame() {
 }
 // Scope 4
 function moveDodger(e) {
+  e.preventDefault();
 
 }
 // Scope 5

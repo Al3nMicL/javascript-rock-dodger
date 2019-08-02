@@ -101,10 +101,22 @@ function moveDodger(e) {
 }
 // Scope 5
 function moveDodgerLeft() {
+  const left = positionToInteger(dodger.style.left);
+  if (left > 0) {
+    DODGER.style.left = `${left - 10}px`;
+  } else {
+    console.log('out of bounds');
+  }
 
 }
 // Scope 6
 function moveDodgerRight() {
+  const right = positionToInteger(dodger.style.left);
+  if (right < GAME_WIDTH - 40) {
+    DODGER.style.left = `${right + 10}px`;
+  } else {
+    console.log('out of bounds');
+  }
 
 }
  // Scope 7

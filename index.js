@@ -10,6 +10,8 @@ const RIGHT_ARROW = 39; // use e.which!
 const ROCKS = [];
 const START = document.getElementById('start');
 
+const END = document.getElementById('end');
+
 var gameInterval = null;
 var gameOver = false;
 // Scope 1
@@ -81,6 +83,7 @@ function endGame() {
  // alert("YOU LOSE!");
   gameOver = false;
   console.log("you lose!");
+  END.style.display = 'block';
 }
 // Scope 4
 function moveDodger(e) {
@@ -130,4 +133,8 @@ function start() {
   gameInterval = setInterval(function() {
     createRock(Math.floor(Math.random() *  (GAME_WIDTH - 20)));
   }, 1000)
+}
+// Scope 9
+function retry() {
+  location.reload();
 }

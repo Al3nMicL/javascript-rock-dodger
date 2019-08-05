@@ -23,6 +23,23 @@
   top: 4rem;
 }
 
+
+#end {
+  display: none;
+  color: red;
+  font-size: 4rem;
+  position: relative;
+  text-decoration: none;
+  top: 4rem;
+}
+
+.msg {
+  color: white;
+  font-size: medium;
+  margin: auto;
+  position: relative;
+}
+
 .rock {
   width: 20px;
   height: 20px;
